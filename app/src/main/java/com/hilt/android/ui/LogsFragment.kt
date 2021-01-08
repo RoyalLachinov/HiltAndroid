@@ -12,7 +12,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.hilt.android.util.DateFormatter
 import com.hilt.android.R
 import com.hilt.android.data.Log
-import com.hilt.android.data.LoggerLocalDataSource
+import com.hilt.android.data.LoggerDataSource
+import com.hilt.android.di.DatabaseLogger
+import com.hilt.android.di.InMemoryLogger
 import com.hilt.android.navigator.AppNavigator
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -24,15 +26,16 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class LogsFragment : Fragment() {
 
-    @Inject lateinit var logger: LoggerLocalDataSource
+    @InMemoryLogger//DatabaseLogger
+    @Inject lateinit var logger: LoggerDataSource
     @Inject lateinit var dateFormatter: DateFormatter
-    private lateinit var navigator: AppNavigator
+    @Inject lateinit var navigator: AppNavigator
 
     private lateinit var recyclerView: RecyclerView
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        navigator = (context as MainActivity).navigator
+        //navigator = (context as MainActivity).navigator
     }
 
     override fun onCreateView(

@@ -9,7 +9,9 @@ import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.Fragment
 import com.hilt.android.R
-import com.hilt.android.data.LoggerLocalDataSource
+import com.hilt.android.data.LoggerDataSource
+import com.hilt.android.di.DatabaseLogger
+import com.hilt.android.di.InMemoryLogger
 import com.hilt.android.navigator.AppNavigator
 import com.hilt.android.navigator.Screens
 import com.hilt.android.util.DateFormatter
@@ -23,13 +25,14 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class ButtonsFragment : Fragment() {
 
-    @Inject lateinit var logger: LoggerLocalDataSource
+    @InMemoryLogger//DatabaseLogger
+    @Inject lateinit var logger: LoggerDataSource
     @Inject lateinit var dateFormatter: DateFormatter
-    private lateinit var navigator: AppNavigator
+    @Inject lateinit var navigator: AppNavigator
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        navigator = (context as MainActivity).navigator
+        //navigator = (context as MainActivity).navigator
     }
 
     override fun onCreateView(
