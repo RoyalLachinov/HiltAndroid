@@ -9,8 +9,11 @@ import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.Fragment
 import com.hilt.android.R
-import com.hilt.android.data.LoggerDataSource
-import com.hilt.android.di.DatabaseLogger
+import com.hilt.android.data.*
+import com.hilt.android.data.ac_retain_scope.LogRepository
+import com.hilt.android.data.ac_retain_scope.LogViewModel
+import com.hilt.android.data.fr_scope.LogFragmentRepo
+import com.hilt.android.data.fr_scope.LogFragmentViewModel
 import com.hilt.android.di.InMemoryLogger
 import com.hilt.android.navigator.AppNavigator
 import com.hilt.android.navigator.Screens
@@ -30,6 +33,13 @@ class ButtonsFragment : Fragment() {
     @Inject lateinit var dateFormatter: DateFormatter
     @Inject lateinit var navigator: AppNavigator
 
+    @Inject lateinit var logViewModel: LogViewModel
+    @Inject lateinit var logFragmentViewModel: LogFragmentViewModel
+    @Inject lateinit var logFragmentRepository: LogFragmentRepo
+    @Inject lateinit var logRepository: LogRepository
+    @Inject lateinit var appDatabase: AppDatabase
+    @Inject lateinit var logDao: LogDao
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
         //navigator = (context as MainActivity).navigator
@@ -48,6 +58,15 @@ class ButtonsFragment : Fragment() {
         Log.d("InstancesNav","AppNavIns $navigator")
         Log.d("Instances","LoggerLocalIns $logger")
         Log.d("Instances","DateFormIns $dateFormatter")
+
+        Log.d("Instances","ViewModelIns $logViewModel")
+        Log.d("Instances","RepositoryIns $logRepository")
+        Log.d("Instances","AppDataBaseIns $appDatabase")
+        Log.d("Instances","LogDaoIns $logDao")
+
+        Log.d("Instances","FragViewModelIns $logFragmentViewModel")
+        Log.d("Instances","FragRepositoryIns $logFragmentRepository")
+
 
         view.findViewById<Button>(R.id.button1).setOnClickListener {
             logger.addLog("Interaction with 'Button 1'")
